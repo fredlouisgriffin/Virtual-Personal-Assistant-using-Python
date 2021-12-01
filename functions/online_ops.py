@@ -5,6 +5,9 @@ from email.message import EmailMessage
 import smtplib
 from decouple import config
 
+# from dotenv import load_dotenv
+# load_dotenv()  # take environment variables from .env file
+
 NEWS_API_KEY = config("NEWS_API_KEY")
 OPENWEATHER_APP_ID = config("OPENWEATHER_APP_ID")
 TMDB_API_KEY = config("TMDB_API_KEY")
@@ -18,8 +21,11 @@ def find_my_ip():
 
 
 def search_on_wikipedia(query):
-    results = wikipedia.summary(query, sentences=2)
-    return results
+    try:
+        results = wikipedia.summary(query, sentences=2)
+        return results
+    except wikipedia.exceptions.PageError as e:
+        return e
 
 
 def play_on_youtube(video):
@@ -92,3 +98,7 @@ def get_random_joke():
 def get_random_advice():
     res = requests.get("https://api.adviceslip.com/advice").json()
     return res['slip']['advice']
+
+
+def open_vlc(file_path):
+    sp.call([paths['vlc'], file_path, '--no-loop', '--no-repeat', '--play-and-exit'])

@@ -107,6 +107,8 @@ celerybeat.pid
 # Environments
 .env
 .venv
+podcast_list.json
+write_json_file.py
 env/
 venv/
 ENV/
